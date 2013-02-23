@@ -35,6 +35,9 @@
 @property (nonatomic, strong) NSArray *userBody;
 @property (nonatomic, strong) NSArray *enemyBody;
 
+@property (nonatomic, strong) NSMutableArray *protection;
+@property (nonatomic, strong) NSMutableArray *attack;
+
 @end
 
 @implementation BOSFighRoomViewController
@@ -62,13 +65,12 @@
     self.enemyTouchScreen.image = _enemyImage;
     
     DELEGATE.userObject = [[BOSUser alloc] init];
+    DELEGATE.enemyObject = [[BOSUser alloc] init];
     DELEGATE.userObject.selectedImage = SHIELD_IMAGE;
     DELEGATE.enemyObject.selectedImage = SWORD_IMAGE;
     [self initSections];
     
-    [self fillLabelsWithData];
-
-    
+    [self fillLabelsWithData];    
 }
 
 - (void)didReceiveMemoryWarning
@@ -168,9 +170,9 @@
 
 - (void)parseEnemyUserConfiguration:(NSDictionary *)enemyDictionary{
     BOSUser *enemy = [[BOSUser alloc] init];
-    enemy.health = enemyDictionary[HEALTH_KEY];
-    enemy.experience = enemyDictionary[EXPERIENCE_KEY];
-    enemy.level = enemyDictionary[LEVEL_KEY];
+    enemy.health = [enemyDictionary[HEALTH_KEY] integerValue];
+    enemy.experience = [enemyDictionary[EXPERIENCE_KEY] integerValue];
+    enemy.level = [enemyDictionary[LEVEL_KEY] integerValue];
     [self fillEnemyConfigurationLabel:enemy];
 }
 
@@ -190,21 +192,33 @@
 
 #pragma mark UI methods
 - (void)fillLabelsWithData{
-    _myExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.userConfiguration[USER_EXPERIENCE]];
-    _myHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.userConfiguration[USER_HEALTH]];
-    _myLevel.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userConfiguration[USER_LEVEL]];
+    _myExperience.text = [NSString stringWithFormat:@"Experience: %d", [DELEGATE.userConfiguration[USER_EXPERIENCE] integerValue]];
+    _myHelth.text = [NSString stringWithFormat:@"Health: %d", [DELEGATE.userConfiguration[USER_HEALTH] integerValue]];
+    _myLevel.text = [NSString stringWithFormat:@"Level: %d", [DELEGATE.userConfiguration[USER_LEVEL] integerValue]];
 }
 
 
 - (void)fillEnemyConfigurationLabel:(BOSUser *)enemy{
-    _enemyHelth.text = [NSString stringWithFormat:@"Health: %@", enemy.health];
-    _enemyLevel.text = [NSString stringWithFormat:@"Level: %@", enemy.level];
-    _enemyExperience.text = [NSString stringWithFormat:@"Experience: %@",enemy.experience];
+    _enemyHelth.text = [NSString stringWithFormat:@"Health: %d", enemy.health];
+    _enemyLevel.text = [NSString stringWithFormat:@"Level: %d", enemy.level];
+    _enemyExperience.text = [NSString stringWithFormat:@"Experience: %d",enemy.experience];
 }
 
 - (void)initSections{
     _userBody = [self fillSectionFor:DELEGATE.userObject];
-    _enemyBody = [self fillSectionFor:DELEGATE.enemyObject];    
+    _enemyBody = [self fillSectionFor:DELEGATE.enemyObject];
+    _protection = [@[@0, @1] mutableCopy];
+    _attack = [@[@0] mutableCopy];
+    BOSSectorModel *atack = [_enemyBody objectAtIndex:[[_attack lastObject] integerValue]];
+    atack.isSelected = YES;
+    BOSSectorModel *protect1 = [_userBody objectAtIndex:[[_protection objectAtIndex:0] integerValue]];
+    protect1.isSelected = YES;
+    BOSSectorModel *protect2 = [_userBody objectAtIndex:[[_protection objectAtIndex:1] integerValue]];
+    protect2.isSelected = YES;
+    _userTouchScreen.sections = _userBody;
+    _enemyTouchScreen.sections = _enemyBody;
+    [_userTouchScreen setNeedsDisplay];
+    [_enemyTouchScreen setNeedsDisplay];
     
 }
 
@@ -218,6 +232,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(46, 0, 71, 56);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     //Body
@@ -226,6 +241,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(46, 58, 68, 75);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     //Left Hand
@@ -234,6 +250,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(0, 60, 33, 87);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     //Right Hand
@@ -242,6 +259,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(125, 60, 33, 87);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     //Left Leg
@@ -250,6 +268,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(14, 170, 47, 88);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     //Right Leg
@@ -258,6 +277,7 @@
     model.imagePath = someUser.selectedImage;
     model.isSelected = NO;
     frameRect = CGRectMake(96, 170, 47, 88);
+    model.sectorFrame = frameRect;
     [sections addObject:model];
     
     return sections;
@@ -266,7 +286,58 @@
 
 #pragma mark - Touch Screen View Delegate Methods
 - (void)screenView:(BOSTouchView *)view tappedPoint:(CGPoint)point{
-    NSLog(@"Screen %@  at point %@", view, NSStringFromCGPoint(point));
+    if ([view isEqual:_userTouchScreen]) {
+        NSLog(@"Screen %@  at point %@", view, NSStringFromCGPoint(point));
+        [self highliteSectionAtUser:point];
+        
+    }
+    else if ([view isEqual:_enemyTouchScreen]){
+        [self highliteSectionAtEnemy:point];
+    }
+   // NSLog(@"Screen %@  at point %@", view, NSStringFromCGPoint(point));
+}
+
+- (void)highliteSectionAtUser:(CGPoint)point{
+    for (BOSSectorModel *section in _userBody) {
+        NSLog(@"Section frame %@ with point %@", NSStringFromCGRect(section.sectorFrame), NSStringFromCGPoint(point));
+        if (CGRectContainsPoint(section.sectorFrame, point)) {
+//            if (!section.isSelected) {
+//                BOSSectorModel *notSelected = _userBody[[_protection[1] integerValue]];
+//                notSelected.isSelected = NO;
+//            }
+            int previousPosition = [_protection[0] integerValue];
+            [_protection insertObject:@(previousPosition) atIndex:1];
+            [_protection insertObject:@(section.position) atIndex:0];
+            section.isSelected = YES;
+            [self clearArray:_userBody];
+            BOSSectorModel *selectFirst = _userBody[[_protection[0] integerValue]];
+            BOSSectorModel *selectSecond = _userBody[[_protection[1] integerValue]];
+            selectFirst.isSelected = YES;
+            selectSecond.isSelected = YES;
+            [_userTouchScreen setNeedsDisplay];
+            return;
+        }
+    }
+}
+
+- (void)highliteSectionAtEnemy:(CGPoint)point{
+    for (BOSSectorModel *section in _enemyBody) {
+        NSLog(@"Section frame %@ with point %@", NSStringFromCGRect(section.sectorFrame), NSStringFromCGPoint(point));
+        if (CGRectContainsPoint(section.sectorFrame, point)) {
+            [self clearArray:_enemyBody];
+            [_attack insertObject:@(section.position) atIndex:0];
+            section.isSelected = YES;
+            [_enemyTouchScreen setNeedsDisplay];
+            return;
+        }
+    }
+}
+
+
+- (void)clearArray:(NSArray *)arrayForClean{
+    for (BOSSectorModel *model in arrayForClean) {
+        model.isSelected = NO;
+    }
 }
 
 

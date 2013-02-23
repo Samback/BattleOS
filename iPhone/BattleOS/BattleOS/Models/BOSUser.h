@@ -10,10 +10,10 @@
 
 @interface BOSUser : NSObject
 
-@property (nonatomic, copy) NSString *health;
-@property (nonatomic, copy) NSString *experience;
-@property (nonatomic, copy) NSString *level;
-@property (nonatomic, copy) NSString *money;
-@property (nonatomic, copy) NSString *force;
-@property (nonatomic, copy) NSString *selectedImage;
+@property (nonatomic) int health;
+@property (nonatomic) int experience;
+@property (nonatomic) int level;
+@property (nonatomic) int money;
+@property (nonatomic) int force;
+@property (nonatomic, strong) NSString *selectedImage;
 @end
