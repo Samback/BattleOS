@@ -37,6 +37,15 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Hero.png" id="NNe-Xk-Msh">
+                                        <rect key="frame" x="40" y="20" width="160" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="Ggy-9X-t5B" customClass="BOSTouchView">
+                                        <rect key="frame" x="40" y="20" width="160" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -65,6 +74,15 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Hero.png" id="3jU-Ve-12Q">
+                                        <rect key="frame" x="40" y="20" width="160" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" id="0te-hm-ZKX" customClass="BOSTouchView">
+                                        <rect key="frame" x="40" y="20" width="160" height="260"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
@@ -75,14 +93,18 @@
                     <navigationItem key="navigationItem" title="Fight Room" id="7YQ-Cq-tvy"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
-                        <outlet property="enemyHelth" destination="VyL-Se-1tK" id="thh-vF-9Gm"/>
-                        <outlet property="enemyLevel" destination="bky-AB-zur" id="E1w-mR-nCs"/>
-                        <outlet property="enemyScore" destination="XIT-2O-uXl" id="4qQ-uQ-HOi"/>
+                        <outlet property="enemyExperience" destination="bky-AB-zur" id="sJ3-FV-BK4"/>
+                        <outlet property="enemyHelth" destination="XIT-2O-uXl" id="zOh-PF-A9h"/>
+                        <outlet property="enemyImage" destination="3jU-Ve-12Q" id="xhu-lh-9Cw"/>
+                        <outlet property="enemyLevel" destination="VyL-Se-1tK" id="H0n-oB-tf6"/>
                         <outlet property="enemyScreen" destination="ydP-VQ-7i0" id="zAT-fY-kYt"/>
-                        <outlet property="myExperience" destination="b6B-WB-Bub" id="zgD-vM-8Rt"/>
-                        <outlet property="myHelth" destination="lYe-7O-EGX" id="BAz-KC-KYB"/>
-                        <outlet property="myScore" destination="A7a-d3-7dc" id="Kul-zg-Xj4"/>
+                        <outlet property="enemyTouchScreen" destination="0te-hm-ZKX" id="GFF-nR-tI3"/>
+                        <outlet property="myExperience" destination="lYe-7O-EGX" id="Y8C-ao-TlB"/>
+                        <outlet property="myHelth" destination="A7a-d3-7dc" id="JkM-Yj-pi2"/>
+                        <outlet property="myLevel" destination="b6B-WB-Bub" id="azJ-tW-fK2"/>
                         <outlet property="myScreen" destination="p61-1b-giJ" id="xw8-05-8Z1"/>
+                        <outlet property="userImage" destination="NNe-Xk-Msh" id="e8A-l1-E4n"/>
+                        <outlet property="userTouchScreen" destination="Ggy-9X-t5B" id="kHS-mX-1Iu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbc-z9-fQq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -108,19 +130,29 @@
             <point key="canvasLocation" x="159" y="-28"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Hero.png" width="95" height="196"/>
+    </resources>
     <classes>
         <class className="BOSFighRoomViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BOSFighRoomViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="enemyExperience" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="enemyHelth" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="enemyImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="enemyLevel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="enemyScore" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="enemyScreen" candidateClass="UIView"/>
+                <relationship kind="outlet" name="enemyTouchScreen" candidateClass="BOSTouchView"/>
                 <relationship kind="outlet" name="myExperience" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="myHelth" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="myScore" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="myLevel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="myScreen" candidateClass="UIView"/>
+                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="userTouchScreen" candidateClass="BOSTouchView"/>
             </relationships>
+        </class>
+        <class className="BOSTouchView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BOSTouchView.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BOSUser.h"
 
 @interface BOSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) NSDictionary *userConfiguration;
+@property (nonatomic, strong) BOSUser *userObject;
+@property (nonatomic, strong) BOSUser *enemyObject;
+
 
 @end
