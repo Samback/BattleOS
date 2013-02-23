@@ -26,19 +26,15 @@
                               USER_HEALTH : health};
     return results;
 }
-+ (void)saveUserResults:(NSDictionary *)results{
-    
-}
 
-//+ (void)saveShareText:(NSString *)shareText{
-//    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-//    [prefs setObject:shareText forKey:SHARE_TEXT];
-//    [prefs synchronize];
-//}
-//
-//+ (NSString *)getShareText{
-//    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-//    return [prefs stringForKey:SHARE_TEXT];
-//}
++ (void)saveUserResults:(NSDictionary *)results{
+    NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
+    NSString *value = nil;
+    for (NSString *key in [results allKeys]) {
+        value = results[key];
+        [user setObject:value forKey:key];
+    }
+    [user synchronize];
+}
 
 @end
