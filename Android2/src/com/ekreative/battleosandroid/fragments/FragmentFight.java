@@ -43,7 +43,6 @@ public class FragmentFight extends SherlockFragment implements OnClickListener{
 		btnRightFootMy.setOnClickListener(this);
 		
 		
-		
 		btnHeadOpponent.setOnClickListener(this);
 		btnBodyOpponent.setOnClickListener(this);
 		btnLeftHandOpponent.setOnClickListener(this);
@@ -73,9 +72,7 @@ public class FragmentFight extends SherlockFragment implements OnClickListener{
 	public int getAttackState() {
 		return attackState;
 	}
-
-
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -208,9 +205,5 @@ public class FragmentFight extends SherlockFragment implements OnClickListener{
 			default:
 				break;
 		}
-	}
-
-	
-	
-	
+	}	
 }

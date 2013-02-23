@@ -1,13 +1,11 @@
 package com.ekreative.battleosandroid;
 
+import java.util.Calendar;
 import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.ekreative.battleosandroid.R;
-import com.ekreative.battleosandroid.fragments.FragmentFight;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -18,7 +16,6 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -27,6 +24,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.bump.api.BumpAPIIntents;
 import com.bump.api.IBumpAPI;
+import com.ekreative.battleosandroid.fragments.FragmentFight;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class MainActivity extends SherlockFragmentActivity {
@@ -35,12 +34,17 @@ public class MainActivity extends SherlockFragmentActivity {
 	private FragmentFight mFragmentFight; 
 	private FrameLayout frame;
 	private FragmentTransaction mFragmentTransaction;
+	private int timestamp;
+	private int opponentTimestamp;
+	private int health, level, exp ;
 	
 	 @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.activity_main);
-	        
+	        Calendar cal = Calendar.getInstance();
+	        timestamp =cal.hashCode(); 
+	        opponentTimestamp = 0;
 	        bindService(new Intent(IBumpAPI.class.getName()), connection, Context.BIND_AUTO_CREATE);        
 	        //Log.i(tag,"After BIND");
 		        IntentFilter filter = new IntentFilter();
@@ -91,11 +95,13 @@ public class MainActivity extends SherlockFragmentActivity {
 	        	Log.i(tag,"Recive something");
 	        	if (action.equals(BumpAPIIntents.DATA_RECEIVED)) {
 	            	Log.i("Bump Test", "Received data from: " + api.userIDForChannelID(intent.getLongExtra("channelID", 0)));
-	                  Toast.makeText(getApplicationContext(), "Received data from: " + api.userIDForChannelID(intent.getLongExtra("channelID", 0)), Toast.LENGTH_SHORT).show();
-	                Log.i("Bump Test", "Data: " + new String(intent.getByteArrayExtra("data")));
-	                Log.i("Result_data", "Data: " + new String(intent.getByteArrayExtra("data")));
-	                Toast.makeText(getApplicationContext(), "Result_data: " + new String(intent.getByteArrayExtra("data")), Toast.LENGTH_SHORT).show();
-	                              	  
+	                Toast.makeText(getApplicationContext(), "Received data from: " + api.userIDForChannelID(intent.getLongExtra("channelID", 0)), Toast.LENGTH_SHORT).show();
+	                String res = new String(intent.getByteArrayExtra("data"));
+	                Log.i("JSONresult", res);
+	                //Log.i("Bump Test", "Data: " + new String(intent.getByteArrayExtra("data")));
+	                //Log.i("Result_data", "Data: " + new String(intent.getByteArrayExtra("data")));
+	                Toast.makeText(getApplicationContext(), "Result_data: " + res, Toast.LENGTH_SHORT).show();
+	                parseJSON(res);   	  
 	            } else if (action.equals(BumpAPIIntents.MATCHED)) {
 	                api.confirm(intent.getLongExtra("proposedChannelID", 0), true);
 	                  Toast.makeText(getApplicationContext(), "MATCHED", Toast.LENGTH_SHORT).show();
@@ -107,6 +113,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	            	try{
 	            		
 	            		jRoot.put("os", "android");
+	            		jRoot.put("timestamp",timestamp);
 	            		JSONArray jBlock = new JSONArray();
 	            		jBlock.put(0, mFragmentFight.getDefenceState0());
 	            		jBlock.put(1, mFragmentFight.getDefenceState1());	            		
@@ -137,8 +144,34 @@ public class MainActivity extends SherlockFragmentActivity {
 	    }
 	};
 
-
+	private void parseJSON(String jString){
+		try{
+			JSONObject jRoot = new JSONObject(jString);
+			if (opponentTimestamp == 0){
+				opponentTimestamp = jRoot.getInt("timestamp");
+			}else{
+				if(opponentTimestamp != jRoot.getInt("timestamp")){
+					Toast.makeText(getApplicationContext(), "Opponent has been changed", Toast.LENGTH_LONG).show();
+				}
+			}
+		}catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
     
+	  @Override
+	  public void onStart() {
+	    super.onStart();
+	    // The rest of your onStart() code.
+	    EasyTracker.getInstance().activityStart(this); // Add this method.
+	  }
+
+	  @Override
+	  public void onStop() {
+	    super.onStop();
+	    // The rest of your onStop() code.
+	    EasyTracker.getInstance().activityStop(this); // Add this method.
+	  }
     
     public void onDestroy() {
         //Log.i(tag, "onDestroy");

@@ -785,6 +785,12 @@ containing a value of this type.
          */
         public static final int abs__config_showMenuShortcutsWhenKeyboardPresent=0x7f050003;
         public static final int abs__split_action_bar_is_narrow=0x7f050001;
+        /** Enable automatic activity tracking
+         */
+        public static final int ga_autoActivityTracking=0x7f050006;
+        /** Enable automatic exception tracking
+         */
+        public static final int ga_reportUncaughtExceptions=0x7f050007;
     }
     public static final class color {
         public static final int abs__background_holo_dark=0x7f060000;
@@ -1080,19 +1086,19 @@ containing a value of this type.
         public static final int abs__title=0x7f040020;
         public static final int abs__titleDivider=0x7f040021;
         public static final int abs__up=0x7f040010;
-        public static final int action_settings=0x7f040049;
-        public static final int btnBodyMy=0x7f04003d;
-        public static final int btnBodyOpponent=0x7f040044;
-        public static final int btnHeadMy=0x7f04003b;
-        public static final int btnHeadOpponent=0x7f040042;
-        public static final int btnLeftFootMy=0x7f04003f;
-        public static final int btnLeftFootOpponent=0x7f040046;
-        public static final int btnLeftHandMy=0x7f04003c;
-        public static final int btnLeftHandOpponent=0x7f040043;
-        public static final int btnRightFootMy=0x7f040040;
-        public static final int btnRightFootOpponent=0x7f040047;
-        public static final int btnRightHandMy=0x7f04003e;
-        public static final int btnRightHandOpponent=0x7f040045;
+        public static final int action_settings=0x7f04004f;
+        public static final int btnBodyMy=0x7f040040;
+        public static final int btnBodyOpponent=0x7f04004a;
+        public static final int btnHeadMy=0x7f04003e;
+        public static final int btnHeadOpponent=0x7f040048;
+        public static final int btnLeftFootMy=0x7f040042;
+        public static final int btnLeftFootOpponent=0x7f04004c;
+        public static final int btnLeftHandMy=0x7f04003f;
+        public static final int btnLeftHandOpponent=0x7f040049;
+        public static final int btnRightFootMy=0x7f040043;
+        public static final int btnRightFootOpponent=0x7f04004d;
+        public static final int btnRightHandMy=0x7f040041;
+        public static final int btnRightHandOpponent=0x7f04004b;
         public static final int center=0x7f04003a;
         public static final int disableHome=0x7f04000e;
         public static final int edit_query=0x7f04002c;
@@ -1104,13 +1110,19 @@ containing a value of this type.
         public static final int margin=0x7f040002;
         public static final int normal=0x7f040006;
         public static final int right=0x7f040001;
-        public static final int rightLayout=0x7f040041;
+        public static final int rightLayout=0x7f040044;
         public static final int selected_view=0x7f040004;
         public static final int showCustom=0x7f04000d;
         public static final int showHome=0x7f04000a;
         public static final int showTitle=0x7f04000c;
-        public static final int slidingmenumain=0x7f040048;
+        public static final int slidingmenumain=0x7f04004e;
         public static final int tabMode=0x7f040008;
+        public static final int txtExpMy=0x7f04003c;
+        public static final int txtExpOpponent=0x7f040046;
+        public static final int txtHealthMy=0x7f04003d;
+        public static final int txtHealthOpponent=0x7f040047;
+        public static final int txtLevelMy=0x7f04003b;
+        public static final int txtLevelOpponent=0x7f040045;
         public static final int useLogo=0x7f040009;
         public static final int wrap_content=0x7f040005;
     }
@@ -1196,9 +1208,12 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
-        public static final int action_settings=0x7f090010;
-        public static final int app_name=0x7f09000f;
-        public static final int hello_world=0x7f090011;
+        public static final int action_settings=0x7f090011;
+        public static final int app_name=0x7f090010;
+        /** Replace placeholder ID with your tracking ID
+         */
+        public static final int ga_trackingId=0x7f09000f;
+        public static final int hello_world=0x7f090012;
     }
     public static final class style {
         /** 
