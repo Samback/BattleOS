@@ -7,12 +7,14 @@
 //
 
 #import "BOSAppDelegate.h"
+#import "BumpClient.h"
 
 @implementation BOSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [BumpClient configureWithAPIKey:@"de703e6680454adbbf3d1ac99727c9b0" andUserID:[[UIDevice currentDevice] name]];
     return YES;
 }
 							
