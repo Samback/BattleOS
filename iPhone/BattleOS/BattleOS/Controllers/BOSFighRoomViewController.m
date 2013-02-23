@@ -60,11 +60,14 @@
     self.userTouchScreen.image = _userImage;
     self.enemyTouchScreen.delegate = self;
     self.enemyTouchScreen.image = _enemyImage;
-    [self fillLabelsWithData];
     
     DELEGATE.userObject = [[BOSUser alloc] init];
     DELEGATE.userObject.selectedImage = SHIELD_IMAGE;
     DELEGATE.enemyObject.selectedImage = SWORD_IMAGE;
+    [self initSections];
+    
+    [self fillLabelsWithData];
+
     
 }
 
@@ -200,6 +203,8 @@
 }
 
 - (void)initSections{
+    _userBody = [self fillSectionFor:DELEGATE.userObject];
+    _enemyBody = [self fillSectionFor:DELEGATE.enemyObject];    
     
 }
 

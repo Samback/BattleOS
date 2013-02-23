@@ -15,4 +15,5 @@
 @interface BOSTouchView : UIView
 @property (nonatomic, assign) id <BOSTouchViewDlegate> delegate;
 @property(nonatomic, retain) UIImageView *image;
+@property (nonatomic, retain) NSArray *sections;
 @end
