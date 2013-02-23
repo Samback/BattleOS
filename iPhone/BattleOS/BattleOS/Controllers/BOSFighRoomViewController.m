@@ -31,6 +31,7 @@
 @property (strong, nonatomic) IBOutlet BOSTouchView *enemyTouchScreen;
 @property (strong, nonatomic) IBOutlet UIImageView *userImage;
 @property (strong, nonatomic) IBOutlet UIImageView *enemyImage;
+@property (nonatomic) NSInteger *atackPosition;
 
 @property (nonatomic, strong) NSArray *userBody;
 @property (nonatomic, strong) NSArray *enemyBody;
@@ -151,10 +152,11 @@
 
 - (NSDictionary *)generateDictionary{
     NSDictionary *dictionary = @{@"os": @"ios",
+                                 @"timestamp":@(1242323532532),
                                  @"fight": @{
                                          @"attack":_attack[0],
                                          @"block":@[_protection[0], _protection[1]],
-                                         @"power":@"50",
+                                         @"power":@10,
                                          },
                                  @"enemy" :
                                      @{
@@ -172,6 +174,8 @@
     NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary *response = [jsonString JSONValue];   
     [self parseEnemyUserConfiguration:response[ENEMY_KEY]];
+  //  NSDictionary *fight =  response[FIGHT_KEY];
+   // self.atackPosition = [fight[POWER_KEY] int];
     dispatch_async(dispatch_get_main_queue(), ^{
         _splashView.hidden = NO;
         _splashView.alpha = 1.0;
@@ -357,5 +361,18 @@
         model.isSelected = NO;
     }
 }
+
+//- (void)updateHealth:(NSInteger)power{
+//    if (([_protection[0] == _atackPosition) || ([_protection[1] == _atackPosition)) {
+//        int health =  [DELEGATE.userConfiguration[USER_HEALTH] integerValue ];
+//        health -= power/2;
+//        DELEGATE.userConfiguration[USER_HEALTH] = health;
+//    }else{
+//        int health =  [DELEGATE.userConfiguration[USER_HEALTH] integerValue ];
+//        health -=power;
+//        [DELEGATE.userConfiguration[USER_HEALTH] setVa]  = health;
+//
+//    }
+//   }
 
 @end

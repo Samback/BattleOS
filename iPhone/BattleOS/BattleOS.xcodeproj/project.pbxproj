@@ -42,6 +42,8 @@
 		50309AEE16D929470097B17F /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AED16D929470097B17F /* shield.png */; };
 		50309AF016D9295C0097B17F /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AEF16D9295C0097B17F /* sword.png */; };
 		50309AF216D94C8D0097B17F /* sword_shield.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF116D94C8D0097B17F /* sword_shield.jpg */; };
+		50309AF416D94FC50097B17F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF316D94FC50097B17F /* Default.png */; };
+		50309AF616D94FDA0097B17F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF516D94FDA0097B17F /* Default@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		50309AED16D929470097B17F /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shield.png; path = Images/shield.png; sourceTree = SOURCE_ROOT; };
 		50309AEF16D9295C0097B17F /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Images/sword.png; sourceTree = SOURCE_ROOT; };
 		50309AF116D94C8D0097B17F /* sword_shield.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sword_shield.jpg; path = Images/sword_shield.jpg; sourceTree = SOURCE_ROOT; };
+		50309AF316D94FC50097B17F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		50309AF516D94FDA0097B17F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 		502B468116D8C25400837FE5 = {
 			isa = PBXGroup;
 			children = (
+				50309AF516D94FDA0097B17F /* Default@2x.png */,
+				50309AF316D94FC50097B17F /* Default.png */,
 				502B469316D8C25400837FE5 /* BattleOS */,
 				502B468C16D8C25400837FE5 /* Frameworks */,
 				502B468B16D8C25400837FE5 /* Products */,
@@ -338,6 +344,8 @@
 				50309AEE16D929470097B17F /* shield.png in Resources */,
 				50309AF016D9295C0097B17F /* sword.png in Resources */,
 				50309AF216D94C8D0097B17F /* sword_shield.jpg in Resources */,
+				50309AF416D94FC50097B17F /* Default.png in Resources */,
+				50309AF616D94FDA0097B17F /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
