@@ -8,6 +8,9 @@
 
 #import "BOSFighRoomViewController.h"
 #import "BumpClient.h"
+#import "SBJson.h"
+
+
 
 @interface BOSFighRoomViewController ()
 
@@ -26,6 +29,8 @@
 
 @implementation BOSFighRoomViewController
 
+#pragma mark - Life cycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,6 +46,7 @@
 	// Do any additional setup after loading the view.
     [self configureBump];
     NSLog(@"Initial dict %@", [BOSHelperClass getInitialUserValues]);
+    [self fillLabelsWithData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,39 +67,35 @@
     [super viewDidUnload];
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
+- (void)fillLabelsWithData{
+    _myExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.userConfiguration[USER_EXPERIENCE]];
+    _myHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.userConfiguration[USER_HEALTH]];
+    _myScore.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userConfiguration[USER_LEVEL]];
+}
+
+
+
+#pragma mark - BUMP methods
 - (void) configureBump {
-    NSDictionary *dictionary = @{@"os": @"iOS",
-                                 @"attack":@"0",
-                                 @"block":@[@"0", @"2"]};
-    NSData *myData = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    [self getEnemyInfo];
+    [self bumpStatus];
+    [self getBumpInfo];
+    [self sendBumpData];
+    [self catchBumpDetection];
+}
+
+- (void)getEnemyInfo{
     [[BumpClient sharedClient] setMatchBlock:^(BumpChannelID channel) {
         NSLog(@"Matched with user: %@", [[BumpClient sharedClient] userIDForChannel:channel]);
         [[BumpClient sharedClient] confirmMatch:YES onChannel:channel];
     }];
-    
-//    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
-//        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
-//        [[BumpClient sharedClient] sendData:[[NSString stringWithFormat:@"Hello, world!"] dataUsingEncoding:NSUTF8StringEncoding]
-//                                  toChannel:channel];
-//    }];
-    
-    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
-        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
-        [[BumpClient sharedClient] sendData:myData
-                                  toChannel:channel];
-    }];
+}
 
-    
-    [[BumpClient sharedClient] setDataReceivedBlock:^(BumpChannelID channel, NSData *data) {
-        NSDictionary *dict = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
-        NSLog(@"Data received from %@: %@",
-              [[BumpClient sharedClient] userIDForChannel:channel],
-             dict);
-    }];
-    
-   // [NSString stringWithCString:[data bytes] encoding:NSUTF8StringEncoding]);
-   
-    // optional callback
+- (void)bumpStatus {
     [[BumpClient sharedClient] setConnectionStateChangedBlock:^(BOOL connected) {
         if (connected) {
             NSLog(@"Bump connected...");
@@ -101,8 +103,42 @@
             NSLog(@"Bump disconnected...");
         }
     }];
+}
+- (void)getBumpInfo{
+    [[BumpClient sharedClient] setDataReceivedBlock:^(BumpChannelID channel, NSData *data) {
+        NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSDictionary *response = [jsonString JSONValue];
+        NSLog(@"Parsewd answer %@  %@", response, jsonString);
+        
+        NSLog(@"Data received from %@: %@",
+              [[BumpClient sharedClient] userIDForChannel:channel], response
+              );
+    }];
+}
+
+
+- (void)sendBumpData{
+    NSDictionary *dictionary = @{@"os": @"iOS",
+                                 @"attack":@"0",
+                                 @"block":@[@"0", @"2"]};
     
-    // optional callback
+    
+    
+    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
+        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
+        NSError *error ;
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
+        if (!error) {
+            [[BumpClient sharedClient] sendData:jsonData
+                                      toChannel:channel];
+            
+        }
+    }];
+    
+}
+
+- (void)catchBumpDetection{
     [[BumpClient sharedClient] setBumpEventBlock:^(bump_event event) {
         switch(event) {
             case BUMP_EVENT_BUMP:
@@ -114,4 +150,5 @@
         }
     }];
 }
+
 @end
