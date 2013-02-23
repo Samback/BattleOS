@@ -18,6 +18,10 @@
 		502B46A416D8C25400837FE5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502B46A316D8C25400837FE5 /* Default-568h@2x.png */; };
 		502B46A716D8C25400837FE5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502B46A516D8C25400837FE5 /* MainStoryboard.storyboard */; };
 		502B46AA16D8C25400837FE5 /* BOSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502B46A916D8C25400837FE5 /* BOSViewController.m */; };
+		502B46B316D8C33F00837FE5 /* libBump.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B46B216D8C33F00837FE5 /* libBump.a */; };
+		502B46B516D8C36E00837FE5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B46B416D8C36E00837FE5 /* CFNetwork.framework */; };
+		502B46B716D8C37600837FE5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B46B616D8C37600837FE5 /* CoreLocation.framework */; };
+		502B46B916D8C3CB00837FE5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B46B816D8C3CB00837FE5 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,11 @@
 		502B46A616D8C25400837FE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		502B46A816D8C25400837FE5 /* BOSViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BOSViewController.h; sourceTree = "<group>"; };
 		502B46A916D8C25400837FE5 /* BOSViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BOSViewController.m; sourceTree = "<group>"; };
+		502B46B116D8C33F00837FE5 /* BumpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BumpClient.h; path = ../../library/BumpClient.h; sourceTree = "<group>"; };
+		502B46B216D8C33F00837FE5 /* libBump.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBump.a; path = ../../library/libBump.a; sourceTree = "<group>"; };
+		502B46B416D8C36E00837FE5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		502B46B616D8C37600837FE5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		502B46B816D8C3CB00837FE5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,9 +53,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				502B46B916D8C3CB00837FE5 /* AudioToolbox.framework in Frameworks */,
+				502B46B716D8C37600837FE5 /* CoreLocation.framework in Frameworks */,
+				502B46B516D8C36E00837FE5 /* CFNetwork.framework in Frameworks */,
 				502B468E16D8C25400837FE5 /* UIKit.framework in Frameworks */,
 				502B469016D8C25400837FE5 /* Foundation.framework in Frameworks */,
 				502B469216D8C25400837FE5 /* CoreGraphics.framework in Frameworks */,
+				502B46B316D8C33F00837FE5 /* libBump.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +69,9 @@
 		502B468116D8C25400837FE5 = {
 			isa = PBXGroup;
 			children = (
+				502B46B816D8C3CB00837FE5 /* AudioToolbox.framework */,
+				502B46B616D8C37600837FE5 /* CoreLocation.framework */,
+				502B46B416D8C36E00837FE5 /* CFNetwork.framework */,
 				502B469316D8C25400837FE5 /* BattleOS */,
 				502B468C16D8C25400837FE5 /* Frameworks */,
 				502B468B16D8C25400837FE5 /* Products */,
@@ -83,6 +99,7 @@
 		502B469316D8C25400837FE5 /* BattleOS */ = {
 			isa = PBXGroup;
 			children = (
+				502B46B016D8C2E400837FE5 /* bump */,
 				502B469C16D8C25400837FE5 /* BOSAppDelegate.h */,
 				502B469D16D8C25400837FE5 /* BOSAppDelegate.m */,
 				502B46A516D8C25400837FE5 /* MainStoryboard.storyboard */,
@@ -105,6 +122,15 @@
 				502B46A316D8C25400837FE5 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		502B46B016D8C2E400837FE5 /* bump */ = {
+			isa = PBXGroup;
+			children = (
+				502B46B116D8C33F00837FE5 /* BumpClient.h */,
+				502B46B216D8C33F00837FE5 /* libBump.a */,
+			);
+			name = bump;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,7 +290,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleOS/BattleOS-Prefix.pch";
 				INFOPLIST_FILE = "BattleOS/BattleOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -275,7 +308,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleOS/BattleOS-Prefix.pch";
 				INFOPLIST_FILE = "BattleOS/BattleOS-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
