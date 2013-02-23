@@ -132,13 +132,28 @@
 }
 
 
-- (void)sendBumpData{
+- (void)sendBumpData{    
+    
+    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
+        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
+        NSError *error ;
+        
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:[self generateDictionary] options:NSJSONWritingPrettyPrinted error:&error];
+        if (!error) {
+            [[BumpClient sharedClient] sendData:jsonData
+                                      toChannel:channel];
+            
+        }
+    }];    
+}
+
+- (NSDictionary *)generateDictionary{
     NSDictionary *dictionary = @{@"os": @"ios",
                                  @"fight": @{
-                                         @"attack":@"0",
-                                         @"block":@[@"0", @"2"],
+                                         @"attack":_attack[0],
+                                         @"block":_protection,
                                          @"power":@"50",
-                                         },                                 
+                                         },
                                  @"enemy" :
                                      @{
                                          @"health":DELEGATE.userConfiguration[USER_HEALTH],
@@ -147,19 +162,8 @@
                                          }
                                  };
     
-    
-    
-    [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
-        NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
-        NSError *error ;
-        
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&error];
-        if (!error) {
-            [[BumpClient sharedClient] sendData:jsonData
-                                      toChannel:channel];
-            
-        }
-    }];    
+    return dictionary;
+
 }
 
 - (void)parseRecivedData:(NSData *)data{
@@ -339,8 +343,5 @@
         model.isSelected = NO;
     }
 }
-
-
-
 
 @end
