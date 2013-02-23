@@ -1,3 +1,0 @@
-[submodule "iPhone/library/SBJSON"]
-	path = iPhone/library/SBJSON
-	url = git://github.com/stig/json-framework.git
