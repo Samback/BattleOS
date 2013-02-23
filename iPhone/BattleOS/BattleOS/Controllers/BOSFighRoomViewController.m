@@ -37,6 +37,7 @@
 
 @property (nonatomic, strong) NSMutableArray *protection;
 @property (nonatomic, strong) NSMutableArray *attack;
+@property (strong, nonatomic) IBOutlet UIImageView *splashView;
 
 @end
 
@@ -92,6 +93,7 @@
     [self setEnemyTouchScreen:nil];
     [self setUserImage:nil];
     [self setEnemyImage:nil];
+    [self setSplashView:nil];
     [super viewDidUnload];
 }
 
@@ -151,7 +153,7 @@
     NSDictionary *dictionary = @{@"os": @"ios",
                                  @"fight": @{
                                          @"attack":_attack[0],
-                                         @"block":_protection,
+                                         @"block":@[_protection[0], _protection[1]],
                                          @"power":@"50",
                                          },
                                  @"enemy" :
@@ -168,8 +170,20 @@
 
 - (void)parseRecivedData:(NSData *)data{
     NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSDictionary *response = [jsonString JSONValue];
-    NSDictionary *enemyDictionary = response[ENEMY_KEY];
+    NSDictionary *response = [jsonString JSONValue];   
+    [self parseEnemyUserConfiguration:response[ENEMY_KEY]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _splashView.hidden = NO;
+        _splashView.alpha = 1.0;
+        [UIView animateWithDuration:2.0 animations:^{
+            _splashView.alpha = 0.0;
+        }completion:^(BOOL finised){
+            _splashView.hidden = YES;
+        }];              
+
+    });
+       
+
 }
 
 - (void)parseEnemyUserConfiguration:(NSDictionary *)enemyDictionary{
