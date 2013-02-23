@@ -35,6 +35,12 @@
 		50309ADC16D8F5A90097B17F /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD016D8F5A90097B17F /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50309ADD16D8F5A90097B17F /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD116D8F5A90097B17F /* SBJsonStreamParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50309ADE16D8F5A90097B17F /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD216D8F5A90097B17F /* NSObject+SBJson.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		50309AE216D904820097B17F /* BOSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AE116D904820097B17F /* BOSUser.m */; };
+		50309AE516D916400097B17F /* Hero.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AE416D916400097B17F /* Hero.png */; };
+		50309AE916D918380097B17F /* BOSTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AE816D918380097B17F /* BOSTouchView.m */; };
+		50309AEC16D924AF0097B17F /* BOSSectorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AEB16D924AF0097B17F /* BOSSectorModel.m */; };
+		50309AEE16D929470097B17F /* shield.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AED16D929470097B17F /* shield.png */; };
+		50309AF016D9295C0097B17F /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AEF16D9295C0097B17F /* sword.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +93,15 @@
 		50309AD016D8F5A90097B17F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = ../../library/JSONParser/SBJsonWriter.m; sourceTree = "<group>"; };
 		50309AD116D8F5A90097B17F /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonStreamParser.m; path = ../../library/JSONParser/SBJsonStreamParser.m; sourceTree = "<group>"; };
 		50309AD216D8F5A90097B17F /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SBJson.m"; path = "../../library/JSONParser/NSObject+SBJson.m"; sourceTree = "<group>"; };
+		50309AE016D904820097B17F /* BOSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSUser.h; path = Models/BOSUser.h; sourceTree = "<group>"; };
+		50309AE116D904820097B17F /* BOSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSUser.m; path = Models/BOSUser.m; sourceTree = "<group>"; };
+		50309AE416D916400097B17F /* Hero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hero.png; path = Images/Hero.png; sourceTree = SOURCE_ROOT; };
+		50309AE716D918380097B17F /* BOSTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSTouchView.h; path = Views/BOSTouchView.h; sourceTree = "<group>"; };
+		50309AE816D918380097B17F /* BOSTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSTouchView.m; path = Views/BOSTouchView.m; sourceTree = "<group>"; };
+		50309AEA16D924AF0097B17F /* BOSSectorModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSSectorModel.h; path = Models/BOSSectorModel.h; sourceTree = "<group>"; };
+		50309AEB16D924AF0097B17F /* BOSSectorModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSSectorModel.m; path = Models/BOSSectorModel.m; sourceTree = "<group>"; };
+		50309AED16D929470097B17F /* shield.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shield.png; path = Images/shield.png; sourceTree = SOURCE_ROOT; };
+		50309AEF16D9295C0097B17F /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = Images/sword.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +155,9 @@
 		502B469316D8C25400837FE5 /* BattleOS */ = {
 			isa = PBXGroup;
 			children = (
+				50309AE616D918110097B17F /* Views */,
+				50309AE316D9162D0097B17F /* Images */,
+				50309ADF16D904620097B17F /* Models */,
 				50309AB916D8F58D0097B17F /* Parser */,
 				502B46BF16D8D99B00837FE5 /* Helpers */,
 				502B46BD16D8CBC500837FE5 /* Controllers */,
@@ -226,6 +244,36 @@
 			name = Parser;
 			sourceTree = "<group>";
 		};
+		50309ADF16D904620097B17F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				50309AE016D904820097B17F /* BOSUser.h */,
+				50309AE116D904820097B17F /* BOSUser.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		50309AE316D9162D0097B17F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				50309AEF16D9295C0097B17F /* sword.png */,
+				50309AED16D929470097B17F /* shield.png */,
+				50309AE416D916400097B17F /* Hero.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		50309AE616D918110097B17F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				50309AE716D918380097B17F /* BOSTouchView.h */,
+				50309AE816D918380097B17F /* BOSTouchView.m */,
+				50309AEA16D924AF0097B17F /* BOSSectorModel.h */,
+				50309AEB16D924AF0097B17F /* BOSSectorModel.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,6 +331,9 @@
 				502B46A216D8C25400837FE5 /* Default@2x.png in Resources */,
 				502B46A416D8C25400837FE5 /* Default-568h@2x.png in Resources */,
 				502B46A716D8C25400837FE5 /* MainStoryboard.storyboard in Resources */,
+				50309AE516D916400097B17F /* Hero.png in Resources */,
+				50309AEE16D929470097B17F /* shield.png in Resources */,
+				50309AF016D9295C0097B17F /* sword.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +360,9 @@
 				50309ADC16D8F5A90097B17F /* SBJsonWriter.m in Sources */,
 				50309ADD16D8F5A90097B17F /* SBJsonStreamParser.m in Sources */,
 				50309ADE16D8F5A90097B17F /* NSObject+SBJson.m in Sources */,
+				50309AE216D904820097B17F /* BOSUser.m in Sources */,
+				50309AE916D918380097B17F /* BOSTouchView.m in Sources */,
+				50309AEC16D924AF0097B17F /* BOSSectorModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
