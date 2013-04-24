@@ -9,6 +9,7 @@
 #import "BOSFighRoomViewController.h"
 #import "BumpClient.h"
 #import "SBJson.h"
+#import "BOSHelperClass.h"
 
 
 
@@ -18,6 +19,7 @@
     int attackE, def0E, def1E, healthE, levelE, expE;
     int bonus;
     NSString  *udid, *enemyUDID;
+    NSString *name;
 }
 
 @property (strong, nonatomic) IBOutlet UILabel *myScore;
@@ -121,9 +123,24 @@
     }
     
     name = [[UIDevice currentDevice] name];
-    updateJSON();
+    [self updateJSON];
 }
 
+- (NSDictionary *)updateJSON
+{
+    NSDictionary *json = @{
+                           JOS : @"ios",
+                           JUDID : udid,
+                           JNAME : name,
+                           JDEF0 : (@(def0)).stringValue,
+                           JDEF1 : (@(def1)).stringValue,
+                           JATTACK : (@(attack)).stringValue,
+                           JHEALTH : (@(health)).stringValue,
+                           JEXP: (@(exp)).stringValue,
+                           JLEVEL : (@(level)).stringValue
+                           };
+    return json;
+}
 
 #pragma mark - BUMP methods
 - (void) configureBump {
@@ -155,7 +172,7 @@
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSDictionary *response = [jsonString JSONValue];
         NSLog(@"Parsewd answer %@  %@", response, jsonString);
-        
+        [self parseResult:response];
         NSLog(@"Data received from %@: %@",
               [[BumpClient sharedClient] userIDForChannel:channel], response
               );
@@ -164,9 +181,7 @@
 
 
 - (void)sendBumpData{
-    NSDictionary *dictionary = @{@"os": @"iOS",
-                                 @"attack":@"0",
-                                 @"block":@[@"0", @"2"]};
+    NSDictionary *dictionary = [self updateJSON];
     
     
     
@@ -196,5 +211,88 @@
         }
     }];
 }
+
+
+- (void)parseResult:(NSDictionary *)res
+{
+
+    int dmg = 0;
+    int dmgE = 0;
+    expE = [res[JEXP] description].intValue;
+    levelE = [res[JLEVEL]description].intValue;
+    healthE = [res[JHEALTH]description].intValue;
+//    fragEnemy.setHealth(healthE);
+//    fragEnemy.setLevel(levelE);
+//    fragEnemy.setExp(expE);
+    if (enemyUDID == nil){
+        enemyUDID = res[JUDID];
+        //Start to fight
+        NSLog(@"Start to fight");
+    }
+    else {
+        if ([enemyUDID isEqualToString:res [JUDID]]){
+            def0E = [res [JDEF0] description].intValue;
+            def1E = [res[JDEF1] description].intValue;
+            attackE = [res[JATTACK]description].intValue;
+            if ((attack == def0E)||(attack == def1E)){//you missed
+				//	Toast.makeText(this, "You missed!", Toast.LENGTH_LONG).show();
+            }else{//you hit him
+                dmgE = (int)round((level+1)*7 + 7 * 0.02*health);
+                NSLog(@"dmgE %d level %d", dmgE, level);
+                bonus = bonus + (int)round(dmgE/3);
+            }
+            if ((attackE == def0)||(attackE == def1)){//enemy missed
+				//	Toast.makeText(this, "Enemy missed!", Toast.LENGTH_LONG).show();
+                bonus = bonus + round(dmgE/9);
+            }else{//enemy hit you
+                dmg = round((levelE+1)*7 + 7 * 0.02*healthE);
+                
+                NSLog(@"dmgE %d level enemy  %d", dmgE, levelE);
+                
+            }
+            healthE = healthE - dmgE;
+            health = health - dmg;
+            //Set parameters
+//            fragMe.setHealth(health);
+//            fragEnemy.setHealth(healthE);
+            if ((health <= 0) &&(healthE <= 0)){
+                //Toast.makeText(this, "Score is tied!", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent();
+//                intent.putExtra("result", FirstActivity.RES_TIDE);
+//                setResult(RESULT_OK, intent);
+//                finish();
+            }else if (health <= 0){
+                //Toast.makeText(this, "You lose!", Toast.LENGTH_LONG).show();
+                exp = exp + bonus;
+//                mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
+//                Intent intent = new Intent();
+//                intent.putExtra("result", FirstActivity.RES_LOSE);
+//                setResult(RESULT_OK, intent);
+//                finish();
+            }else if (healthE <= 0 ){
+                //Toast.makeText(this, "You win!", Toast.LENGTH_LONG).show();
+                exp = exp + bonus + 100;
+//                mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
+//                Intent intent = new Intent();
+//                intent.putExtra("result", FirstActivity.RES_WIN);
+//                setResult(RESULT_OK, intent);
+//                finish();
+            }else{
+				//	Toast.makeText(this, "Show must go on!", Toast.LENGTH_LONG).show();
+                
+            }
+        }else{
+            //Toast.makeText(this, "You win", Toast.LENGTH_LONG).show();
+            exp = exp + bonus + 100;
+//            mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
+//            Intent intent = new Intent();
+//            intent.putExtra("result", FirstActivity.RES_WIN);
+//            setResult(RESULT_OK, intent);
+//            finish();
+        }
+    }
+    [self updateJSON];
+}
+
 
 @end

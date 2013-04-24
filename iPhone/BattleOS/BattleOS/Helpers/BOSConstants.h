@@ -12,16 +12,16 @@
 
 
 
-#define TAG_HEALTH = "health";
-#define TAG_LEVEL = "level";
-#define TAG_EXP = "exp";
-#define TAG_NAME = "name";
-#define JOS = "os";
-#define JUDID = "udid";
-#define JNAME = "name";
-#define JDEF0 = "def0";
-#define JDEF1 = "def1";
-#define JATTACK = "attack";
-#define JHEALTH = "health";
-#define JEXP    = "exp";
-#define JLEVEL  = "level";
+#define TAG_HEALTH  @"health"
+#define TAG_LEVEL  @"level"
+#define TAG_EXP  @"exp"
+#define TAG_NAME  @"name"
+#define JOS     @"os"
+#define JUDID  @"udid"
+#define JNAME  @"name"
+#define JDEF0   @"def0"
+#define JDEF1  @"def1"
+#define JATTACK  @"attack"
+#define JHEALTH  @"health"
+#define JEXP    @"exp"
+#define JLEVEL   @"level"
