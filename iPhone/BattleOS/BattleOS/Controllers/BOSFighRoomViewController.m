@@ -13,6 +13,12 @@
 
 
 @interface BOSFighRoomViewController ()
+{
+    int attack, def0, def1, health, level, exp;
+    int attackE, def0E, def1E, healthE, levelE, expE;
+    int bonus;
+    NSString  *udid, *enemyUDID;
+}
 
 @property (strong, nonatomic) IBOutlet UILabel *myScore;
 @property (strong, nonatomic) IBOutlet UILabel *myExperience;
@@ -77,6 +83,46 @@
     _myScore.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userConfiguration[USER_LEVEL]];
 }
 
+
+#pragma mark - Init data
+
+- (void)initData
+{
+    udid = [BOSHelperClass getUUID];
+    enemyUDID = nil;
+    attack    = 0;
+    def0      = 0;
+    def1      = 1;
+    bonus     = 0;
+    health    = 1000;
+    level     = 0;
+    exp       = 0;
+    
+    if (exp > 1200000){
+        level = 7;
+    }
+    else if (exp > 600000) {
+        level = 6;
+    }
+    else if (exp > 300000) {
+        level = 5;
+    }
+    else if (exp > 150000) {
+        level = 4;
+    }
+    else if (exp > 70000) {
+        level = 3;
+    }
+    else if (exp > 30000) {
+        level = 2;
+    }
+    else if (exp > 10000) {
+        level = 1;
+    }
+    
+    name = [[UIDevice currentDevice] name];
+    updateJSON();
+}
 
 
 #pragma mark - BUMP methods

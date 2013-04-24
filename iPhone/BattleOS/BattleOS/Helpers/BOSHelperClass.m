@@ -37,4 +37,19 @@
     [user synchronize];
 }
 
++ (NSString *)getUUID
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    // getting an NSString
+    NSString *uuid = [prefs stringForKey:UUID];
+    if (!uuid) {
+        // Create universally unique identifier (object)
+        uuid =  [[UIDevice currentDevice].identifierForVendor UUIDString];
+        [prefs setObject:uuid forKey:UUID];
+        [prefs synchronize];
+    }
+    return uuid;
+}
+
+
 @end
