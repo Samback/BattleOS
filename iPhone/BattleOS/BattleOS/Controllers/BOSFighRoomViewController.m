@@ -52,6 +52,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self initData];
     [self configureBump];
     NSLog(@"Initial dict %@", [BOSHelperClass getInitialUserValues]);
     [self fillLabelsWithData];
@@ -79,10 +80,16 @@
     return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
 }
 
-- (void)fillLabelsWithData{
-    _myExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.userConfiguration[USER_EXPERIENCE]];
-    _myHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.userConfiguration[USER_HEALTH]];
-    _myScore.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userConfiguration[USER_LEVEL]];
+- (void)fillLabelsWithData
+{
+    self.myScore.text = [NSString stringWithFormat:@"Experience: %d", exp];
+    self.myHelth.text = [NSString stringWithFormat:@"Health: %d", health];
+    self.myExperience.text = [NSString stringWithFormat:@"Level: %d", level];
+    
+    
+    self.enemyScore.text = [NSString stringWithFormat:@"Experience: %d", expE];
+    self.enemyHelth.text = [NSString stringWithFormat:@"Health: %d", healthE];
+    self.enemyLevel.text = [NSString stringWithFormat:@"Level: %d", levelE];
 }
 
 
@@ -172,7 +179,9 @@
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSDictionary *response = [jsonString JSONValue];
         NSLog(@"Parsewd answer %@  %@", response, jsonString);
-        [self parseResult:response];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self parseResult:response];
+        });
         NSLog(@"Data received from %@: %@",
               [[BumpClient sharedClient] userIDForChannel:channel], response
               );
@@ -292,6 +301,7 @@
         }
     }
     [self updateJSON];
+    [self fillLabelsWithData];
 }
 
 
