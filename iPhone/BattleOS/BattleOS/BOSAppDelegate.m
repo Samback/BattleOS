@@ -16,7 +16,7 @@
     // Override point for customization after application launch.
 //    8cdf424bb78349c6bfafb9f22f2788a4
 //    de703e6680454adbbf3d1ac99727c9b0
-    [BumpClient configureWithAPIKey:@"8cdf424bb78349c6bfafb9f22f2788a4" andUserID:[[UIDevice currentDevice] name]];
+    [BumpClient configureWithAPIKey:@"de703e6680454adbbf3d1ac99727c9b0" andUserID:[[UIDevice currentDevice] name]];
     DELEGATE.userConfiguration = [BOSHelperClass getInitialUserValues];
     return YES;
 }

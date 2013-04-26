@@ -2,9 +2,9 @@
 #define DELEGATE ((BOSAppDelegate *)([[UIApplication sharedApplication] delegate]))
 
 #define APP_TITLE @"BattleOS"
-
 #define SWORD_IMAGE @"sword"
 #define SHIELD_IMAGE @"shield"
+#define UUID @"uuid"
 
 #define USER_MONEY @"USER MONEY"
 #define USER_EXPERIENCE @"USER EXPERIENCE"
@@ -26,3 +26,17 @@
 #define ATTACK_KEY @"attack"
 #define BLOCK_KEY @"block"
 #define POWER_KEY @"power"
+
+#define TAG_HEALTH  @"health"
+#define TAG_LEVEL  @"level"
+#define TAG_EXP  @"exp"
+#define TAG_NAME  @"name"
+#define JOS     @"os"
+#define JUDID  @"udid"
+#define JNAME  @"name"
+#define JDEF0   @"def0"
+#define JDEF1  @"def1"
+#define JATTACK  @"attack"
+#define JHEALTH  @"health"
+#define JEXP    @"exp"
+#define JLEVEL   @"level"

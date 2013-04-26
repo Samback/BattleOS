@@ -11,4 +11,5 @@
 @interface BOSHelperClass : NSObject
 + (NSDictionary *)getInitialUserValues;
 + (void)saveUserResults:(NSDictionary *)results;
++ (NSString *)getUUID;
 @end
