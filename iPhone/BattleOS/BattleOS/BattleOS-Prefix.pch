@@ -13,4 +13,8 @@
     #import <Foundation/Foundation.h>
     #import "BOSHelperClass.h"
     #import "BOSConstants.h"
+    #import <CoreData/CoreData.h>
+    #import <RestKit/RestKit.h>
+    #import <RestKit/CoreData/RKManagedObjectStore.h>
+   
 #endif

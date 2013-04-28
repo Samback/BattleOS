@@ -8,6 +8,7 @@
 
 #import "BOSAppDelegate.h"
 #import "BumpClient.h"
+#import "PlayerModel.h"
 
 @implementation BOSAppDelegate
 
@@ -16,8 +17,10 @@
     // Override point for customization after application launch.
 //    8cdf424bb78349c6bfafb9f22f2788a4
 //    de703e6680454adbbf3d1ac99727c9b0
-    [BumpClient configureWithAPIKey:@"de703e6680454adbbf3d1ac99727c9b0" andUserID:[[UIDevice currentDevice] name]];
-    DELEGATE.userConfiguration = [BOSHelperClass getInitialUserValues];
+    [BumpClient configureWithAPIKey:BUMP_API_KEY andUserID:[[UIDevice currentDevice] name]];
+    
+    [self initRestKitWithCoreDataIntegration];
+    [self initSourceInCoreData];
     return YES;
 }
 							
@@ -47,5 +50,63 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+
+- (void)initRestKitWithCoreDataIntegration{
+    //Activity indicator
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
+    RKObjectManager* objectManager = [RKObjectManager managerWithBaseURL:[NSURL URLWithString:BASE_URL]];
+    [objectManager.HTTPClient setDefaultHeader:@"Accept" value:RKMIMETypeJSON];
+    [objectManager.HTTPClient setParameterEncoding:AFJSONParameterEncoding];
+    NSURL *modelURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"DataBase" ofType:@"momd"]];
+    // NOTE: Due to an iOS 5 bug, the managed object model returned is immutable.
+    NSManagedObjectModel *managedObjectModel = [[[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL] mutableCopy];
+    RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+    [managedObjectStore createPersistentStoreCoordinator];
+    
+    NSString *storePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"DataBase.sqlite"];
+    
+    NSError *error;
+    
+    NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:storePath fromSeedDatabaseAtPath:nil withConfiguration:nil options:@{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES} error:&error];
+    
+    NSAssert(persistentStore, @"Failed to add persistent store with error: %@", error);
+    
+    [managedObjectStore createManagedObjectContexts];
+    
+    // Configure a managed object cache to ensure we do not create duplicate objects
+    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+    
+    self.managedObjectModel = managedObjectModel;
+    objectManager.managedObjectStore = managedObjectStore;
+}
+
+- (void)initSourceInCoreData
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:[PlayerModel entityName]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"udid" ascending:YES]];
+    
+    NSError *error;
+    NSArray *results = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSAssert(!error, @"Error performing fetch request: %@", error);
+    if (!error) {
+        if (results.count == 0) {
+            [self createPlayer];
+        }
+        else {
+            DELEGATE.userObject = results[0];
+        }
+    }
+}
+
+
+-(void)createPlayer
+{
+     NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+    DELEGATE.userObject = [PlayerModel initPlayerWithName:[[UIDevice currentDevice] name] health:@1000 experience:@0 level:@0 attack:@0 def0:@0 def1:@1 udid:[BOSHelperClass getUUID] selectedImage:SHIELD_IMAGE andContext:context];
+}
+
 
 @end

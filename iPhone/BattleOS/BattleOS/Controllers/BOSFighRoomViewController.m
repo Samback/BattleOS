@@ -8,21 +8,14 @@
 
 #import "BOSFighRoomViewController.h"
 #import "BumpClient.h"
-#import "SBJson.h" 
-#import "BOSUser.h"
+#import "SBJson.h"
+#import "PlayerModel.h"
 #import "BOSTouchView.h"
 #import "BOSSectorModel.h"
 #import "BOSHelperClass.h"
 
 @interface BOSFighRoomViewController ()<BOSTouchViewDlegate>
-{
-    int attack, def0, def1, health, level, exp;
-    int attackE, def0E, def1E, healthE, levelE, expE;
-    int bonus;
-    NSString  *udid, *enemyUDID;
-    NSString *name;
-}
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *statusButton;
 @property (strong, nonatomic) IBOutlet UILabel *myLevel;
 @property (strong, nonatomic) IBOutlet UILabel *myExperience;
 @property (strong, nonatomic) IBOutlet UILabel *myHelth;
@@ -64,21 +57,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self initData];
     [self configureBump];
-    NSLog(@"Initial dict %@", [BOSHelperClass getInitialUserValues]);
     self.userTouchScreen.delegate = self;
     self.userTouchScreen.image = _userImage;
     self.enemyTouchScreen.delegate = self;
     self.enemyTouchScreen.image = _enemyImage;
-    
-    DELEGATE.userObject = [[BOSUser alloc] init];
-    DELEGATE.enemyObject = [[BOSUser alloc] init];
-    DELEGATE.userObject.selectedImage = SHIELD_IMAGE;
-    DELEGATE.enemyObject.selectedImage = SWORD_IMAGE;
     [self initSections];
-    
-    [self fillLabelsWithData];    
+    [self fillLabelsWithData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,6 +86,7 @@
     [self setUserImage:nil];
     [self setEnemyImage:nil];
     [self setSplashView:nil];
+    [self setStatusButton:nil];
     [super viewDidUnload];
 }
 
@@ -111,70 +97,33 @@
 
 - (void)fillLabelsWithData
 {
-    dispatch_async(dispatch_get_current_queue(), ^{
-        self.myExperience.text = [NSString stringWithFormat:@"Experience: %d", exp];
-        self.myHelth.text = [NSString stringWithFormat:@"Health: %d", health];
-        self.myLevel.text = [NSString stringWithFormat:@"Level: %d", level];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.myExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.userObject.experience];
+        self.myHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.userObject.health];
+        self.myLevel.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userObject.level];
         
-        self.enemyExperience.text = [NSString stringWithFormat:@"Experience: %d", expE];
-        self.enemyHelth.text = [NSString stringWithFormat:@"Health: %d", healthE];
-        self.enemyLevel.text = [NSString stringWithFormat:@"Level: %d", levelE];
+        self.enemyExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.enemyObject.experience];
+        self.enemyHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.enemyObject.experience];
+        self.enemyLevel.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.enemyObject.experience];
     });
 }
 
 
 #pragma mark - Init data
 
-- (void)initData
-{
-    udid = [BOSHelperClass getUUID];
-    enemyUDID = nil;
-    attack    = 0;
-    def0      = 0;
-    def1      = 1;
-    bonus     = 0;
-    health    = 1000;
-    level     = 0;
-    exp       = 0;
-    
-    if (exp > 1200000){
-        level = 7;
-    }
-    else if (exp > 600000) {
-        level = 6;
-    }
-    else if (exp > 300000) {
-        level = 5;
-    }
-    else if (exp > 150000) {
-        level = 4;
-    }
-    else if (exp > 70000) {
-        level = 3;
-    }
-    else if (exp > 30000) {
-        level = 2;
-    }
-    else if (exp > 10000) {
-        level = 1;
-    }
-    
-    name = [[UIDevice currentDevice] name];
-    [self updateJSON];
-}
-
 - (NSDictionary *)updateJSON
 {
+    NSLog(@"Delegate user %@", DELEGATE.userObject);
     NSDictionary *json = @{
-                           JOS : @"ios",
-                           JUDID : udid,
-                           JNAME : name,
-                           JDEF0 : (@(def0)).stringValue,
-                           JDEF1 : (@(def1)).stringValue,
-                           JATTACK : (@10).stringValue,
-                           JHEALTH : (@(health)).stringValue,
-                           JEXP: (@(exp)).stringValue,
-                           JLEVEL : (@(level)).stringValue
+                           OS_KEY : IOS_KEY,
+                           UDID_KEY : DELEGATE.userObject.udid,
+                           NAME_KEY : DELEGATE.userObject.name,
+                           DEF0_KEY : (@(DELEGATE.userObject.defend0Value)).stringValue,
+                           DEF1_KEY : (@(DELEGATE.userObject.defend1Value)).stringValue,
+                           ATTACK_KEY : (@(DELEGATE.userObject.attackValue)).stringValue,
+                           HEALTH_KEY : (@(DELEGATE.userObject.healthValue)).stringValue,
+                           EXPERIENCE_KEY: (@(DELEGATE.userObject.experienceValue)).stringValue,
+                           LEVEL_KEY : (@(DELEGATE.userObject.levelValue)).stringValue
                            };
     return json;
 }
@@ -206,8 +155,8 @@
 }
 - (void)getBumpInfo{
     [[BumpClient sharedClient] setDataReceivedBlock:^(BumpChannelID channel, NSData *data) {
-
-//        [self parseRecivedData:data];
+        
+        //        [self parseRecivedData:data];
         NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSDictionary *response = [jsonString JSONValue];
         NSLog(@"Parsewd answer %@  %@", response, jsonString);
@@ -221,8 +170,7 @@
 }
 
 - (void)sendBumpData{
-    NSDictionary *dictionary = [self updateJSON];
-    
+   
     [[BumpClient sharedClient] setChannelConfirmedBlock:^(BumpChannelID channel) {
         NSLog(@"Channel with %@ confirmed.", [[BumpClient sharedClient] userIDForChannel:channel]);
         NSError *error ;
@@ -233,43 +181,17 @@
                                       toChannel:channel];
             
         }
-    }];    
+    }];
 }
 
-- (NSDictionary *)generateDictionary{
-    NSDictionary *dictionary = @{@"os": @"ios",
-                                 @"timestamp":@(1242323532532),
-                                 @"fight": @{
-                                         @"attack":_attack[0],
-                                         @"block":@[_protection[0], _protection[1]],
-                                         @"power":@10,
-                                         },
-                                 @"enemy" :
-                                     @{
-                                         @"health":DELEGATE.userConfiguration[USER_HEALTH],
-                                         @"experience":DELEGATE.userConfiguration[USER_EXPERIENCE],
-                                         @"level":DELEGATE.userConfiguration[USER_LEVEL]
-                                         }
-                                 };
-    
-    return dictionary;
-
-}
 
 //- (void)parseRecivedData:(NSData *)data{
 //    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSDictionary *response = [jsonString JSONValue];   
+//    NSDictionary *response = [jsonString JSONValue];
 //    [self parseEnemyUserConfiguration:response[ENEMY_KEY]];
 //  //  NSDictionary *fight =  response[FIGHT_KEY];
 //   // self.atackPosition = [fight[POWER_KEY] int];
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _splashView.hidden = NO;
-//        _splashView.alpha = 1.0;
-//        [UIView animateWithDuration:2.0 animations:^{
-//            _splashView.alpha = 0.0;
-//        }completion:^(BOOL finised){
-//            _splashView.hidden = YES;
-//        }];              
+
 //
 //    });
 //}
@@ -286,7 +208,7 @@
     [[BumpClient sharedClient] setBumpEventBlock:^(bump_event event) {
         switch(event) {
             case BUMP_EVENT_BUMP:
-                NSLog(@"Bump detected.");
+                        NSLog(@"Bump detected.");
                 break;
             case BUMP_EVENT_NO_MATCH:
                 NSLog(@"No match.");
@@ -296,20 +218,16 @@
 }
 
 
-#pragma mark UI methods
-//- (void)fillLabelsWithData{
-//    _myExperience.text = [NSString stringWithFormat:@"Experience: %d", [DELEGATE.userConfiguration[USER_EXPERIENCE] integerValue]];
-//    _myHelth.text = [NSString stringWithFormat:@"Health: %d", [DELEGATE.userConfiguration[USER_HEALTH] integerValue]];
-//    _myLevel.text = [NSString stringWithFormat:@"Level: %d", [DELEGATE.userConfiguration[USER_LEVEL] integerValue]];
-//    _enemyHelth.text = [NSString stringWithFormat:@"Health: %d", ];
-//    _enemyLevel.text = [NSString stringWithFormat:@"Level: %d", enemy.level];
-//    _enemyExperience.text = [NSString stringWithFormat:@"Experience: %d",enemy.experience];
-//}
-
-
-- (void)fillEnemyConfigurationLabel:(BOSUser *)enemy{
-   
+- (void)setStatus:(BOOL)status
+{
+        __weak BOSFighRoomViewController *selfWeak = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            selfWeak.statusButton.enabled = status;
+        });
 }
+
+#pragma mark UI method
+
 
 - (void)initSections{
     _userBody = [self fillSectionFor:DELEGATE.userObject];
@@ -329,7 +247,8 @@
     
 }
 
-- (NSArray *)fillSectionFor:(BOSUser *)someUser{
+- (NSArray *)fillSectionFor:(PlayerModel *)someUser
+{
     NSMutableArray *sections = [NSMutableArray array];
     BOSSectorModel * model = nil;
     CGRect frameRect = CGRectZero;
@@ -401,17 +320,17 @@
     else if ([view isEqual:_enemyTouchScreen]){
         [self highliteSectionAtEnemy:point];
     }
-   // NSLog(@"Screen %@  at point %@", view, NSStringFromCGPoint(point));
+    // NSLog(@"Screen %@  at point %@", view, NSStringFromCGPoint(point));
 }
 
 - (void)highliteSectionAtUser:(CGPoint)point{
     for (BOSSectorModel *section in _userBody) {
         NSLog(@"Section frame %@ with point %@", NSStringFromCGRect(section.sectorFrame), NSStringFromCGPoint(point));
         if (CGRectContainsPoint(section.sectorFrame, point)) {
-//            if (!section.isSelected) {
-//                BOSSectorModel *notSelected = _userBody[[_protection[1] integerValue]];
-//                notSelected.isSelected = NO;
-//            }
+            //            if (!section.isSelected) {
+            //                BOSSectorModel *notSelected = _userBody[[_protection[1] integerValue]];
+            //                notSelected.isSelected = NO;
+            //            }
             int previousPosition = [_protection[0] integerValue];
             [_protection insertObject:@(previousPosition) atIndex:1];
             [_protection insertObject:@(section.position) atIndex:0];
@@ -419,6 +338,8 @@
             [self clearArray:_userBody];
             BOSSectorModel *selectFirst = _userBody[[_protection[0] integerValue]];
             BOSSectorModel *selectSecond = _userBody[[_protection[1] integerValue]];
+            DELEGATE.userObject.defend0 = @([_protection[0] integerValue]);
+            DELEGATE.userObject.defend1 = @([_protection[1] integerValue]);
             selectFirst.isSelected = YES;
             selectSecond.isSelected = YES;
             [_userTouchScreen setNeedsDisplay];
@@ -433,6 +354,7 @@
         if (CGRectContainsPoint(section.sectorFrame, point)) {
             [self clearArray:_enemyBody];
             [_attack insertObject:@(section.position) atIndex:0];
+            DELEGATE.userObject.attack = @(section.position);
             section.isSelected = YES;
             [_enemyTouchScreen setNeedsDisplay];
             return;
@@ -461,83 +383,85 @@
 //   }
 - (void)parseResult:(NSDictionary *)res
 {
-
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _splashView.hidden = NO;
+        _splashView.alpha = 1.0;
+        [UIView animateWithDuration:2.0 animations:^{
+            _splashView.alpha = 0.0;
+        }completion:^(BOOL finised){
+            _splashView.hidden = YES;
+        }];
+    });
     int dmg = 0;
     int dmgE = 0;
-    expE = [res[JEXP] description].intValue;
-    levelE = [res[JLEVEL]description].intValue;
-    healthE = [res[JHEALTH]description].intValue;
-//    fragEnemy.setHealth(healthE);
-//    fragEnemy.setLevel(levelE);
-//    fragEnemy.setExp(expE);
-    if (enemyUDID == nil){
-        enemyUDID = res[JUDID];
-        //Start to fight
-        NSLog(@"Start to fight");
-    }
-    else {
-        if ([enemyUDID isEqualToString:res [JUDID]]){
-            def0E = [res [JDEF0] description].intValue;
-            def1E = [res[JDEF1] description].intValue;
-            attackE = [res[JATTACK]description].intValue;
-            if ((attack == def0E)||(attack == def1E)){//you missed
-				//	Toast.makeText(this, "You missed!", Toast.LENGTH_LONG).show();
-            }else{//you hit him
-                dmgE = (int)round((level+1)*7 + 7 * 0.02*health);
-                NSLog(@"dmgE %d level %d", dmgE, level);
-                bonus = bonus + (int)round(dmgE/3);
-            }
-            if ((attackE == def0)||(attackE == def1)){//enemy missed
-				//	Toast.makeText(this, "Enemy missed!", Toast.LENGTH_LONG).show();
-                bonus = bonus + round(dmgE/9);
-            }else{//enemy hit you
-                dmg = round((levelE+1)*7 + 7 * 0.02*healthE);
-                
-                NSLog(@"dmgE %d level enemy  %d", dmgE, levelE);
-                
-            }
-            healthE = healthE - dmgE;
-            health = health - dmg;
-            //Set parameters
-//            fragMe.setHealth(health);
-//            fragEnemy.setHealth(healthE);
-            if ((health <= 0) &&(healthE <= 0)){
-                //Toast.makeText(this, "Score is tied!", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent();
-//                intent.putExtra("result", FirstActivity.RES_TIDE);
-//                setResult(RESULT_OK, intent);
-//                finish();
-            }else if (health <= 0){
-                //Toast.makeText(this, "You lose!", Toast.LENGTH_LONG).show();
-                exp = exp + bonus;
-//                mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
-//                Intent intent = new Intent();
-//                intent.putExtra("result", FirstActivity.RES_LOSE);
-//                setResult(RESULT_OK, intent);
-//                finish();
-            }else if (healthE <= 0 ){
-                //Toast.makeText(this, "You win!", Toast.LENGTH_LONG).show();
-                exp = exp + bonus + 100;
-//                mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
-//                Intent intent = new Intent();
-//                intent.putExtra("result", FirstActivity.RES_WIN);
-//                setResult(RESULT_OK, intent);
-//                finish();
-            }else{
-				//	Toast.makeText(this, "Show must go on!", Toast.LENGTH_LONG).show();
-                
-            }
-        }else{
-            //Toast.makeText(this, "You win", Toast.LENGTH_LONG).show();
-            exp = exp + bonus + 100;
-//            mSharedPreferences.edit().putInt(TAG_EXP, exp).commit();
-//            Intent intent = new Intent();
-//            intent.putExtra("result", FirstActivity.RES_WIN);
-//            setResult(RESULT_OK, intent);
-//            finish();
+    int bonus = 0;
+    //    DELEGATE.enemyObject.experienceValue = [res[EXPERIENCE_KEY] description].intValue;
+    //    DELEGATE.enemyObject.levelValue =
+    //    DELEGATE.enemyObject.healthValue =
+       
+    PlayerModel *enemy = DELEGATE.enemyObject;
+    PlayerModel *player = DELEGATE.userObject;
+    if ([enemy.udid isEqualToString:res [UDID_KEY]]) {
+        enemy.defend0Value = [res [DEF0_KEY] description].intValue;
+        enemy.defend1Value = [res[DEF1_KEY] description].intValue;
+        enemy.attackValue  = [res[ATTACK_KEY]description].intValue;
+        if ((player.attackValue == enemy.defend0Value) || (player.attackValue == enemy.defend1Value)) {
+            //you missed
+            //	Toast.makeText(this, "You missed!", Toast.LENGTH_LONG).show();
+            NSLog(@"You missed");
+        }
+        else {//you hit him
+            dmgE = (int)lroundf( (player.levelValue + 1)*7 + 7 * 0.02 * player.healthValue);
+            NSLog(@"dmgE %d level %d", dmgE, player.levelValue);
+            bonus = bonus + (int)lroundf(dmgE / 3.0);
+        }
+        if ((enemy.attackValue == player.defend0Value) || (enemy.attackValue == player.defend0Value)) {//enemy missed
+            //	Toast.makeText(this, "Enemy missed!", Toast.LENGTH_LONG).show();
+            NSLog(@"Enemy missed");
+            bonus = bonus + (int)lroundf(dmgE / 9.0);
+        }
+        else {//enemy hit you
+            dmg = round((enemy.levelValue + 1) * 7 + 7 * 0.02 * enemy.healthValue);
+            NSLog(@"dmg %d level enemy  %d", dmg, enemy.levelValue);
+            
+        }
+        enemy.healthValue -= dmgE;
+        player.healthValue -= dmg;
+        //Set parameters
+        //            fragMe.setHealth(health);
+        //            fragEnemy.setHealth(healthE);
+        if ((player.healthValue <= 0) && (enemy.healthValue <= 0)){
+            //Toast.makeText(this, "Score is tied!", Toast.LENGTH_LONG).show();
+            //                Intent intent = new Intent();
+            //                intent.putExtra("result", FirstActivity.RES_TIDE);
+            //                setResult(RESULT_OK, intent);
+            //                finish();
+            NSLog(@"Both lose");
+        }
+        else if (player.healthValue <= 0) {
+            //Toast.makeText(this, "You lose!", Toast.LENGTH_LONG).show();
+            player.experienceValue +=  bonus;
+            NSLog(@"You lose");
+        }
+        else if (enemy.experienceValue <= 0 ) {
+            //Toast.makeText(this, "You win!", Toast.LENGTH_LONG).show();
+            player.experienceValue += bonus + 100;
+            NSLog(@"You win");
+            
         }
     }
+    else {
+        //Start to fight
+        DELEGATE.enemyObject = [PlayerModel createEnemyPlayerWithInputData:res];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self initSections];
+        });
+    }
+
     [self updateJSON];
     [self fillLabelsWithData];
 }
+    
+
 @end

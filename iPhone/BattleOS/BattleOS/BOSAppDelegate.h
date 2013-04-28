@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BOSUser.h"
+#import "PlayerModel.h"
+#import <RestKit/CoreData/RKManagedObjectStore.h>
 
 @interface BOSAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) NSDictionary *userConfiguration;
-@property (nonatomic, strong) BOSUser *userObject;
-@property (nonatomic, strong) BOSUser *enemyObject;
-
+@property (nonatomic, strong) PlayerModel *userObject;
+@property (nonatomic, strong) PlayerModel *enemyObject;
+@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, strong) RKManagedObjectStore *managedObjectStore;
 
 @end

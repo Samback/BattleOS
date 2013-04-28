@@ -13,8 +13,6 @@
 		502B469816D8C25400837FE5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 502B469616D8C25400837FE5 /* InfoPlist.strings */; };
 		502B469A16D8C25400837FE5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 502B469916D8C25400837FE5 /* main.m */; };
 		502B469E16D8C25400837FE5 /* BOSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 502B469D16D8C25400837FE5 /* BOSAppDelegate.m */; };
-		502B46A016D8C25400837FE5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 502B469F16D8C25400837FE5 /* Default.png */; };
-		502B46A216D8C25400837FE5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502B46A116D8C25400837FE5 /* Default@2x.png */; };
 		502B46A416D8C25400837FE5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502B46A316D8C25400837FE5 /* Default-568h@2x.png */; };
 		502B46A716D8C25400837FE5 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502B46A516D8C25400837FE5 /* MainStoryboard.storyboard */; };
 		502B46B316D8C33F00837FE5 /* libBump.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B46B216D8C33F00837FE5 /* libBump.a */; };
@@ -35,7 +33,6 @@
 		50309ADC16D8F5A90097B17F /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD016D8F5A90097B17F /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50309ADD16D8F5A90097B17F /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD116D8F5A90097B17F /* SBJsonStreamParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		50309ADE16D8F5A90097B17F /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AD216D8F5A90097B17F /* NSObject+SBJson.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		50309AE216D904820097B17F /* BOSUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AE116D904820097B17F /* BOSUser.m */; };
 		50309AE516D916400097B17F /* Hero.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AE416D916400097B17F /* Hero.png */; };
 		50309AE916D918380097B17F /* BOSTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AE816D918380097B17F /* BOSTouchView.m */; };
 		50309AEC16D924AF0097B17F /* BOSSectorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50309AEB16D924AF0097B17F /* BOSSectorModel.m */; };
@@ -44,9 +41,18 @@
 		50309AF216D94C8D0097B17F /* sword_shield.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF116D94C8D0097B17F /* sword_shield.jpg */; };
 		50309AF416D94FC50097B17F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF316D94FC50097B17F /* Default.png */; };
 		50309AF616D94FDA0097B17F /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50309AF516D94FDA0097B17F /* Default@2x.png */; };
+		50D87DB2172DAF55003B4257 /* DataBase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50D87DB0172DAF55003B4257 /* DataBase.xcdatamodeld */; };
+		50D87DB9172DB10B003B4257 /* PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D87DB5172DB10B003B4257 /* PlayerModel.m */; };
+		50D87DBA172DB10B003B4257 /* _PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D87DB8172DB10B003B4257 /* _PlayerModel.m */; };
+		50D87DBC172DB27D003B4257 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D87DBB172DB27D003B4257 /* CoreData.framework */; };
+		50D87DBE172DB284003B4257 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D87DBD172DB284003B4257 /* MobileCoreServices.framework */; };
+		50D87DC0172DB2B1003B4257 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D87DBF172DB2B1003B4257 /* SystemConfiguration.framework */; };
+		D304F728A1824C2392B6666A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27CBF0568C0448BEB48FA149 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27CBF0568C0448BEB48FA149 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4022B9FD3BA54494A1B9534E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		502B468A16D8C25400837FE5 /* BattleOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BattleOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		502B468D16D8C25400837FE5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		502B468F16D8C25400837FE5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -96,8 +102,6 @@
 		50309AD016D8F5A90097B17F /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = ../../library/JSONParser/SBJsonWriter.m; sourceTree = "<group>"; };
 		50309AD116D8F5A90097B17F /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonStreamParser.m; path = ../../library/JSONParser/SBJsonStreamParser.m; sourceTree = "<group>"; };
 		50309AD216D8F5A90097B17F /* NSObject+SBJson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SBJson.m"; path = "../../library/JSONParser/NSObject+SBJson.m"; sourceTree = "<group>"; };
-		50309AE016D904820097B17F /* BOSUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSUser.h; path = Models/BOSUser.h; sourceTree = "<group>"; };
-		50309AE116D904820097B17F /* BOSUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSUser.m; path = Models/BOSUser.m; sourceTree = "<group>"; };
 		50309AE416D916400097B17F /* Hero.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Hero.png; path = Images/Hero.png; sourceTree = SOURCE_ROOT; };
 		50309AE716D918380097B17F /* BOSTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BOSTouchView.h; path = Views/BOSTouchView.h; sourceTree = "<group>"; };
 		50309AE816D918380097B17F /* BOSTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BOSTouchView.m; path = Views/BOSTouchView.m; sourceTree = "<group>"; };
@@ -108,6 +112,14 @@
 		50309AF116D94C8D0097B17F /* sword_shield.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sword_shield.jpg; path = Images/sword_shield.jpg; sourceTree = SOURCE_ROOT; };
 		50309AF316D94FC50097B17F /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		50309AF516D94FDA0097B17F /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		50D87DB1172DAF55003B4257 /* DataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataBase.xcdatamodel; sourceTree = "<group>"; };
+		50D87DB4172DB10B003B4257 /* PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerModel.h; sourceTree = "<group>"; };
+		50D87DB5172DB10B003B4257 /* PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerModel.m; sourceTree = "<group>"; };
+		50D87DB7172DB10B003B4257 /* _PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _PlayerModel.h; sourceTree = "<group>"; };
+		50D87DB8172DB10B003B4257 /* _PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _PlayerModel.m; sourceTree = "<group>"; };
+		50D87DBB172DB27D003B4257 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		50D87DBD172DB284003B4257 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		50D87DBF172DB2B1003B4257 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +127,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50D87DC0172DB2B1003B4257 /* SystemConfiguration.framework in Frameworks */,
+				50D87DBE172DB284003B4257 /* MobileCoreServices.framework in Frameworks */,
+				50D87DBC172DB27D003B4257 /* CoreData.framework in Frameworks */,
 				502B46B916D8C3CB00837FE5 /* AudioToolbox.framework in Frameworks */,
 				502B46B716D8C37600837FE5 /* CoreLocation.framework in Frameworks */,
 				502B46B516D8C36E00837FE5 /* CFNetwork.framework in Frameworks */,
@@ -122,6 +137,7 @@
 				502B469016D8C25400837FE5 /* Foundation.framework in Frameworks */,
 				502B469216D8C25400837FE5 /* CoreGraphics.framework in Frameworks */,
 				502B46B316D8C33F00837FE5 /* libBump.a in Frameworks */,
+				D304F728A1824C2392B6666A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +152,7 @@
 				502B469316D8C25400837FE5 /* BattleOS */,
 				502B468C16D8C25400837FE5 /* Frameworks */,
 				502B468B16D8C25400837FE5 /* Products */,
+				4022B9FD3BA54494A1B9534E /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -150,12 +167,16 @@
 		502B468C16D8C25400837FE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50D87DBF172DB2B1003B4257 /* SystemConfiguration.framework */,
+				50D87DBD172DB284003B4257 /* MobileCoreServices.framework */,
+				50D87DBB172DB27D003B4257 /* CoreData.framework */,
 				502B468D16D8C25400837FE5 /* UIKit.framework */,
 				502B46B816D8C3CB00837FE5 /* AudioToolbox.framework */,
 				502B46B616D8C37600837FE5 /* CoreLocation.framework */,
 				502B46B416D8C36E00837FE5 /* CFNetwork.framework */,
 				502B468F16D8C25400837FE5 /* Foundation.framework */,
 				502B469116D8C25400837FE5 /* CoreGraphics.framework */,
+				27CBF0568C0448BEB48FA149 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,9 +184,9 @@
 		502B469316D8C25400837FE5 /* BattleOS */ = {
 			isa = PBXGroup;
 			children = (
+				50D87DA9172DACE6003B4257 /* CoreData */,
 				50309AE616D918110097B17F /* Views */,
 				50309AE316D9162D0097B17F /* Images */,
-				50309ADF16D904620097B17F /* Models */,
 				50309AB916D8F58D0097B17F /* Parser */,
 				502B46BF16D8D99B00837FE5 /* Helpers */,
 				502B46BD16D8CBC500837FE5 /* Controllers */,
@@ -252,15 +273,6 @@
 			name = Parser;
 			sourceTree = "<group>";
 		};
-		50309ADF16D904620097B17F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				50309AE016D904820097B17F /* BOSUser.h */,
-				50309AE116D904820097B17F /* BOSUser.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		50309AE316D9162D0097B17F /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +295,36 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		50D87DA9172DACE6003B4257 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				50D87DB3172DB10B003B4257 /* Human */,
+				50D87DB6172DB10B003B4257 /* Machine */,
+				50D87DB0172DAF55003B4257 /* DataBase.xcdatamodeld */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		50D87DB3172DB10B003B4257 /* Human */ = {
+			isa = PBXGroup;
+			children = (
+				50D87DB4172DB10B003B4257 /* PlayerModel.h */,
+				50D87DB5172DB10B003B4257 /* PlayerModel.m */,
+			);
+			name = Human;
+			path = CoreData/Human;
+			sourceTree = "<group>";
+		};
+		50D87DB6172DB10B003B4257 /* Machine */ = {
+			isa = PBXGroup;
+			children = (
+				50D87DB7172DB10B003B4257 /* _PlayerModel.h */,
+				50D87DB8172DB10B003B4257 /* _PlayerModel.m */,
+			);
+			name = Machine;
+			path = CoreData/Machine;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -293,6 +335,7 @@
 				502B468616D8C25400837FE5 /* Sources */,
 				502B468716D8C25400837FE5 /* Frameworks */,
 				502B468816D8C25400837FE5 /* Resources */,
+				44C75D7A7B89412BB86E50FC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -336,8 +379,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				502B469816D8C25400837FE5 /* InfoPlist.strings in Resources */,
-				502B46A016D8C25400837FE5 /* Default.png in Resources */,
-				502B46A216D8C25400837FE5 /* Default@2x.png in Resources */,
 				502B46A416D8C25400837FE5 /* Default-568h@2x.png in Resources */,
 				502B46A716D8C25400837FE5 /* MainStoryboard.storyboard in Resources */,
 				50309AE516D916400097B17F /* Hero.png in Resources */,
@@ -350,6 +391,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		44C75D7A7B89412BB86E50FC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		502B468616D8C25400837FE5 /* Sources */ = {
@@ -372,9 +430,11 @@
 				50309ADC16D8F5A90097B17F /* SBJsonWriter.m in Sources */,
 				50309ADD16D8F5A90097B17F /* SBJsonStreamParser.m in Sources */,
 				50309ADE16D8F5A90097B17F /* NSObject+SBJson.m in Sources */,
-				50309AE216D904820097B17F /* BOSUser.m in Sources */,
 				50309AE916D918380097B17F /* BOSTouchView.m in Sources */,
 				50309AEC16D924AF0097B17F /* BOSSectorModel.m in Sources */,
+				50D87DB2172DAF55003B4257 /* DataBase.xcdatamodeld in Sources */,
+				50D87DB9172DB10B003B4257 /* PlayerModel.m in Sources */,
+				50D87DBA172DB10B003B4257 /* _PlayerModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,13 +518,14 @@
 		};
 		502B46AE16D8C25400837FE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4022B9FD3BA54494A1B9534E /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleOS/BattleOS-Prefix.pch";
 				INFOPLIST_FILE = "BattleOS/BattleOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../library\"",
@@ -480,11 +541,12 @@
 		};
 		502B46AF16D8C25400837FE5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4022B9FD3BA54494A1B9534E /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BattleOS/BattleOS-Prefix.pch";
 				INFOPLIST_FILE = "BattleOS/BattleOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../library\"",
@@ -518,6 +580,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		50D87DB0172DAF55003B4257 /* DataBase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				50D87DB1172DAF55003B4257 /* DataBase.xcdatamodel */,
+			);
+			currentVersion = 50D87DB1172DAF55003B4257 /* DataBase.xcdatamodel */;
+			name = DataBase.xcdatamodeld;
+			path = CoreData/DataBase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 502B468216D8C25400837FE5 /* Project object */;
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vGM-dW-uyh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="vGM-dW-uyh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -94,7 +94,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Fight Room" id="7YQ-Cq-tvy"/>
+                    <navigationItem key="navigationItem" title="Fight Room" id="7YQ-Cq-tvy">
+                        <barButtonItem key="rightBarButtonItem" title="Satatus" id="GCj-JE-U1k"/>
+                    </navigationItem>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <outlet property="enemyExperience" destination="bky-AB-zur" id="sJ3-FV-BK4"/>
@@ -108,6 +110,7 @@
                         <outlet property="myLevel" destination="b6B-WB-Bub" id="azJ-tW-fK2"/>
                         <outlet property="myScreen" destination="p61-1b-giJ" id="xw8-05-8Z1"/>
                         <outlet property="splashView" destination="0yV-Sy-WRw" id="F2p-01-fhs"/>
+                        <outlet property="statusButton" destination="GCj-JE-U1k" id="SSY-2O-bUb"/>
                         <outlet property="userImage" destination="NNe-Xk-Msh" id="e8A-l1-E4n"/>
                         <outlet property="userTouchScreen" destination="Ggy-9X-t5B" id="kHS-mX-1Iu"/>
                     </connections>
@@ -139,29 +142,6 @@
         <image name="Hero.png" width="95" height="196"/>
         <image name="sword_shield.jpg" width="1600" height="1600"/>
     </resources>
-    <classes>
-        <class className="BOSFighRoomViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BOSFighRoomViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="enemyExperience" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="enemyHelth" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="enemyImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="enemyLevel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="enemyScreen" candidateClass="UIView"/>
-                <relationship kind="outlet" name="enemyTouchScreen" candidateClass="BOSTouchView"/>
-                <relationship kind="outlet" name="myExperience" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="myHelth" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="myLevel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="myScreen" candidateClass="UIView"/>
-                <relationship kind="outlet" name="splashView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="userImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="userTouchScreen" candidateClass="BOSTouchView"/>
-            </relationships>
-        </class>
-        <class className="BOSTouchView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/BOSTouchView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
