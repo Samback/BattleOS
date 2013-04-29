@@ -101,10 +101,10 @@
         self.myExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.userObject.experience];
         self.myHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.userObject.health];
         self.myLevel.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.userObject.level];
-        
-        self.enemyExperience.text = [NSString stringWithFormat:@"Experience: %@", DELEGATE.enemyObject.experience];
-        self.enemyHelth.text = [NSString stringWithFormat:@"Health: %@", DELEGATE.enemyObject.experience];
-        self.enemyLevel.text = [NSString stringWithFormat:@"Level: %@", DELEGATE.enemyObject.experience];
+        PlayerModel *enemy = DELEGATE.enemyObject;
+        self.enemyExperience.text = [NSString stringWithFormat:@"Experience: %@", enemy.experience];
+        self.enemyHelth.text = [NSString stringWithFormat:@"Health: %@", enemy.health];
+        self.enemyLevel.text = [NSString stringWithFormat:@"Level: %@", enemy.level];
     });
 }
 
@@ -125,6 +125,7 @@
                            EXPERIENCE_KEY: (@(DELEGATE.userObject.experienceValue)).stringValue,
                            LEVEL_KEY : (@(DELEGATE.userObject.levelValue)).stringValue
                            };
+    NSLog(@"Will send  %@", json);
     return json;
 }
 
@@ -459,6 +460,8 @@
         });
     }
 
+    NSError * error;
+    [[RKObjectManager sharedManager].managedObjectStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
     [self updateJSON];
     [self fillLabelsWithData];
 }
